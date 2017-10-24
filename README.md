@@ -1,5 +1,5 @@
 <p align="center">
-<img alt="BLAC" src="https://raw.githubusercontent.com/yamorijp/blac/master/capture.jpg" width="600"/>
+<img alt="BLAC" src="https://raw.githubusercontent.com/yamorijp/blac/master/capture.png" width="600"/>
 </p>
 
 
