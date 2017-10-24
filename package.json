@@ -1,0 +1,32 @@
+{
+  "name": "blac",
+  "version": "0.1.0",
+  "description": "bitFlyer Lightning API Console",
+  "keywords": ["bitflyer", "lightning", "api", "console", "repl"],
+  "main": "console.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "./console.js",
+    "console": "./console.js",
+    "board": "./board.js",
+    "executions": "./executions.js"
+  },
+  "engines": {
+    "node": ">= 6.10.0"
+  },
+  "author": "Nihon Yamori <yamori.jp@gmail.com>",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.11.0",
+    "jsonschema": "^1.2.0",
+    "lodash.throttle": "^4.1.1",
+    "pubnub": "^4.0.8",
+    "sync-request": "^4.1.0",
+    "then-request": "^4.1.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
+}
