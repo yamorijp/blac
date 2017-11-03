@@ -13,7 +13,7 @@ const products = require('./core/product');
 
 const render_wait = 200;
 
-let product = products.BtcJpy;
+let product = null;
 let buffer = new model.ExecutionBuffer();
 
 
@@ -80,6 +80,11 @@ const main = (program) => {
     })
     .subscribe(["lightning_executions_" + product.code]);
 };
+
+process.on("uncaughtException", (err) => {
+  console.error("Error:", err.message || err);
+  process.exit(1);
+});
 
 const program = require('commander');
 program

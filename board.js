@@ -13,7 +13,7 @@ const products = require('./core/product');
 
 const render_wait = 200;
 
-let product = products.BtcJpy;
+let product = null;
 let health = new model.Health();
 let ticker = new model.Ticker();
 let board = new model.Board();
@@ -108,6 +108,11 @@ const main = (program) => {
       render();
     });
 };
+
+process.on("uncaughtException", (err) => {
+  console.error("Error:", err.message || err);
+  process.exit(1);
+});
 
 
 const program = require('commander');
