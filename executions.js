@@ -42,7 +42,8 @@ const _render = () => {
 
   out.write(term.separator + term.nl);
 
-  buffer.data.reverse().forEach(row => {
+  for (let i=buffer.data.length-1; i>=0; i--) {
+    const row = buffer.data[i];
     out.write("  ");
     out.write(row.time.toLocaleTimeString().padEnd(14));
     out.write(term.colorful(
@@ -50,7 +51,7 @@ const _render = () => {
       row.side.padEnd(4) + product.format_price(row.price).padStart(10)));
     out.write(product.format_volume(row.size).padStart(16));
     out.write(term.nl);
-  });
+  }
 
   out.write(term.separator + term.nl);
   out.write(term.nl);
