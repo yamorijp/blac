@@ -16,7 +16,7 @@ const render_wait = 200;
 let product = null;
 let health = new model.Health();
 let ticker = new model.Ticker();
-let board = new model.Board();
+let book = new model.OrderBook();
 
 
 const _render = () => {
@@ -47,13 +47,13 @@ const _render = () => {
 
   out.write(term.separator + term.nl);
 
-  board.getAsks().forEach(row => {
+  book.getAsks().forEach(row => {
     out.write(product.format_volume(row[1]).padStart(16));
     out.write(" " + term.colorful(term.red, product.format_price(row[0]).padStart(12)) + " ");
     out.write("".padEnd(16));
     out.write(term.nl);
   });
-  board.getBids().forEach(row => {
+  book.getBids().forEach(row => {
     out.write("".padEnd(16));
     out.write(" " + term.colorful(term.green, product.format_price(row[0]).padStart(12)) + " ");
     out.write(product.format_volume(row[1]).padStart(16));
@@ -70,7 +70,7 @@ const render = throttle(_render, render_wait);
 
 const main = (program) => {
   product = products.get_product(program.product);
-  board.lock()
+  book.lock()
     .setRowCount(program.row)
     .setGroupingFactor(program.group);
 
@@ -90,7 +90,7 @@ const main = (program) => {
     .attach((channel, message) => {
       switch (channel) {
         case board_channel:
-          board.update(message);
+          book.update(message);
           break;
         case ticker_channel:
           ticker.update(message);
@@ -103,8 +103,8 @@ const main = (program) => {
   new api.PublicAPI()
     .call('GET', '/v1/board', {product_code: product.code})
     .then(data => {
-      board.setData(data);
-      board.unlock();
+      book.setData(data);
+      book.unlock();
       render();
     });
 };
@@ -126,7 +126,7 @@ program
     console.log("");
     console.log("  Examples:");
     console.log("");
-    console.log("    $ node board.js -p BTC_JPY -r 32 -g 1000");
+    console.log("    $ node book.js -p BTC_JPY -r 32 -g 1000");
     console.log("");
   })
   .parse(process.argv);

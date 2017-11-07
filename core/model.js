@@ -1,6 +1,6 @@
 "use strict";
 
-class Board {
+class OrderBook {
 
   constructor() {
     this.bids = new Map();
@@ -205,7 +205,7 @@ class Health {
 }
 
 
-module.exports.Board = Board;
+module.exports.OrderBook = OrderBook;
 module.exports.ExecutionBuffer = ExecutionBuffer;
 module.exports.Ticker = Ticker;
 module.exports.Health = Health;
