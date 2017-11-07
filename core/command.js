@@ -231,7 +231,7 @@ module.exports.commands.set_key = new Command("bf_set_key")
 module.exports.commands.store_key = new Command("bf_store_key")
   .description("登録中のAPI keyとAPI secretをファイルに書き出します")
   .action(argv => {
-    const c = auth.get_credential();
+    const c = pri.get_credential();
     if (c.api_key && c.api_secret) {
       require('fs').writeFileSync(
         ".credential.json", JSON.stringify(c), {mode: 384 /*0o600*/});
