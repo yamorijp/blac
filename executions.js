@@ -29,15 +29,18 @@ const _render = () => {
 
   let stats = buffer.getStats();
   out.write("  Buy:".padEnd(20));
-  out.write(term.colorful(term.green, product.format_volume(stats.buy_volume).padStart(26)));
+  out.write(term.colorful(
+    term.bid_color, product.format_volume(stats.buy_volume).padStart(26)));
   out.write(term.nl);
 
   out.write("  Sell:".padEnd(20));
-  out.write(term.colorful(term.red, product.format_volume(stats.sell_volume).padStart(26)));
+  out.write(term.colorful(
+    term.ask_color, product.format_volume(stats.sell_volume).padStart(26)));
   out.write(term.nl);
 
   out.write("  Buy/Sell Ratio:".padEnd(20));
-  out.write(term.colorful(stats.ratio >= 1.0 ? term.green : term.red, stats.ratio.toFixed(2).padStart(26)));
+  out.write(term.colorful(
+    term.updown_color(stats.ratio, 1.0), stats.ratio.toFixed(2).padStart(26)));
   out.write(term.nl);
 
   out.write(term.separator + term.nl);
@@ -47,7 +50,7 @@ const _render = () => {
     out.write("  ");
     out.write(row.time.toLocaleTimeString().padEnd(14));
     out.write(term.colorful(
-      row.side == 'BUY' ? term.green : term.red,
+      row.side == 'BUY' ? term.bid_color : term.ask_color,
       row.side.padEnd(4) + product.format_price(row.price).padStart(10)));
     out.write(product.format_volume(row.size).padStart(16));
     out.write(term.nl);
@@ -91,7 +94,7 @@ program
   .version(require('./package.json').version)
   .description("Display BitFlyer Lightning's execution history")
   .option("-p, --product <code>", "Product code (BTC_JPY|ETH_BTC|BCH_BTC|FX_BTC_JPY)", s => s.toUpperCase(), "BTC_JPY")
-  .option("-r, --row <n>", "Number of display rows (default: 48)", v => parseInt(v), 48)
+  .option("-r, --row <n>", "Number of display rows (default: 40)", v => parseInt(v), 40)
   .on("--help", () => {
     console.log("");
     console.log("  Examples:");

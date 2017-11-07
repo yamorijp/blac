@@ -31,13 +31,13 @@ const _render = () => {
 
   out.write("  Last Price:".padEnd(20));
   out.write(term.colorful(
-    ticker.price >= ticker.price_old ? term.green : term.red,
+    term.updown_color(ticker.price, ticker.price_old),
     product.format_price(ticker.price).padStart(26)));
   out.write(term.nl);
 
   out.write("  Bid/Ask Ratio:".padEnd(20));
   out.write(term.colorful(
-    ticker.ratio >= 1.0 ? term.green : term.red,
+    term.updown_color(ticker.ratio, 1.0),
     ticker.ratio.toFixed(2).padStart(26)));
   out.write(term.nl);
 
@@ -49,13 +49,13 @@ const _render = () => {
 
   book.getAsks().forEach(row => {
     out.write(product.format_volume(row[1]).padStart(16));
-    out.write(" " + term.colorful(term.red, product.format_price(row[0]).padStart(12)) + " ");
+    out.write(" " + term.colorful(term.ask_color, product.format_price(row[0]).padStart(12)) + " ");
     out.write("".padEnd(16));
     out.write(term.nl);
   });
   book.getBids().forEach(row => {
     out.write("".padEnd(16));
-    out.write(" " + term.colorful(term.green, product.format_price(row[0]).padStart(12)) + " ");
+    out.write(" " + term.colorful(term.bid_color, product.format_price(row[0]).padStart(12)) + " ");
     out.write(product.format_volume(row[1]).padStart(16));
     out.write(term.nl);
   });
@@ -120,7 +120,7 @@ program
   .version(require("./package.json").version)
   .description("Display BitFlyer Lightning's order book")
   .option("-p, --product <code>", "Product code (BTC_JPY|ETH_BTC|BCH_BTC|FX_BTC_JPY)", s => s.toUpperCase(), "BTC_JPY")
-  .option("-r, --row <n>", "Number of display rows (default: 24)", v => parseInt(v), 24)
+  .option("-r, --row <n>", "Number of display rows (default: 20)", v => parseInt(v), 20)
   .option("-g, --group <n>", "Order grouping unit (default: 0.0)", v => parseFloat(v), 0.0)
   .on("--help", () => {
     console.log("");
