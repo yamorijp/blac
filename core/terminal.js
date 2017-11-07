@@ -19,6 +19,10 @@ const separator = "------------------------------------------------";
 const nl = "\n";
 
 const colorful = (color, value) => color + value + reset;
+const updown_color = (left, right) => {
+  if (left == right) return white;
+  return left > right ? green : red;
+};
 
 module.exports.black = black;
 module.exports.red = red;
@@ -37,3 +41,6 @@ module.exports.clear = clear;
 module.exports.separator = separator;
 module.exports.nl = nl;
 module.exports.colorful = colorful;
+module.exports.updown_color = updown_color;
+module.exports.bid_color = green;
+module.exports.ask_color = red;

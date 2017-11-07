@@ -181,11 +181,30 @@ class Ticker {
   }
 
   update(data) {
-    this.price_old = this.price;
+    if (this.price == 0.0) this.price_old = data.ltp;
+    else if (this.price != data.ltp) this.price_old = this.price;
     this.price = data.ltp;
     this.ratio = (data.total_bid_depth / data.total_ask_depth);
     this.volume = data.volume_by_product;
     return this;
+  }
+}
+
+
+class TickerBoard {
+
+  constructor(products) {
+    this.data = new Map();
+    products.forEach((v, k) => this.data.set(k, new Ticker()));
+  }
+
+  update(id, data) {
+    if (this.data.has(id))
+      this.data.get(id).update(data);
+  }
+
+  get(id) {
+    return this.data.get(id);
   }
 }
 
@@ -208,4 +227,5 @@ class Health {
 module.exports.OrderBook = OrderBook;
 module.exports.ExecutionBuffer = ExecutionBuffer;
 module.exports.Ticker = Ticker;
+module.exports.TickerBoard = TickerBoard;
 module.exports.Health = Health;
