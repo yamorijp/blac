@@ -7,12 +7,15 @@ BLAC (Bitflyer Lightning API Console) は ビットコイン取引所 [bitFlyer]
 [bitFlyer Lightning API](https://bitflyer.jp/docs) を使用した非公式のCLIツールパッケージです。
 
 Lightning APIクライアントを統合したjavascriptの対話型コンソールプログラム、
-リアルタイム更新の板表示プログラムと約定履歴表示プログラムを含みます。
+リアルタイム更新の板表示プログラム、約定履歴表示プログラムとティッカー表示プログラムを含みます。
 
 当プログラムは"experimental"です。  
 十分なテストが行われていません。オーダー発行を行う場合は最初に少額でお試しください。
 
 ※U.S.リージョンには対応していません
+
+
+姉妹品としてQuoine Exchange APIを使用した [QUAC](https://github.com/yamorijp/quac)もあります。
 
 
 ## 導入手順
@@ -66,7 +69,7 @@ APIの詳細は、bitFlyerによる[API Documentation](https://lightning.bitflye
 
 
 
-## 板表示プログラム (board.js)
+## 板表示プログラム (book.js)
 
 リアルタイム更新の板表示プログラムです。  
 値段範囲で注文をまとめるグルーピング表示に対応しています。(`-g`オプション）
@@ -74,13 +77,13 @@ APIの詳細は、bitFlyerによる[API Documentation](https://lightning.bitflye
 
       オプション:
         
-        -p, --product <code>  プロダクトコード (BTC_JPY|ETH_BTC|BCH_BTC|FX_BTC_JPY)
-        -r, --row <n>         買いと売り注文の表示行数 (デフォルト: 24)
+        -p, --product <code>  プロダクトコード (デフォルト: BTC_JPY)
+        -r, --row <n>         買いと売り注文の表示行数 (デフォルト: 20)
         -g, --group <n>       指定範囲の注文をまとめて表示 (デフォルト: 無効)
         
       例:
         
-        $ node board.js -p BTC_JPY -r 32 -g 1000
+        $ node book.js -p BTC_JPY -r 32 -g 100
       
 
 ## 約定履歴表示プログラム (executions.js)
@@ -90,12 +93,27 @@ APIの詳細は、bitFlyerによる[API Documentation](https://lightning.bitflye
 
       オプション:
     
-        -p, --product <code>  プロダクトコード (BTC_JPY|ETH_BTC|BCH_BTC|FX_BTC_JPY)
-        -r, --row <n>         履歴の表示行数 (デフォルト: 48)
+        -p, --product <code>  プロダクトコード (デフォルト: BTC_JPY)
+        -r, --row <n>         履歴の表示行数 (デフォルト: 40)
     
       例:
     
         $ node executions.js -p ETH_BTC -r 20
+
+
+## ティッカー表示プログラム (ticker.js)
+
+リアルタイム更新のティッカー表示プログラムです。
+
+
+      オプション:
+    
+        -p, --product <code>  カンマ区切りの通貨ペアコード (デフォルト: "BTC_JPY,ETH_BTC,BCH_BTC")
+    
+      例:
+    
+        $ node ticker.js -p "BTC_USD,ETH_BTC"
+
 
 
 ## ライセンス
@@ -103,5 +121,5 @@ APIの詳細は、bitFlyerによる[API Documentation](https://lightning.bitflye
 MIT
 
 
-bitcoin: `1BpLZm4JEFiDqAnaexuYMhGJZKdRQJKixP`
+bitcoin: `1BpLZm4JEFiDqAnaexuYMhGJZKdRQJKixP`  
 monacoin: `MEaJSzymtvpB7AtrryVzn9LeZYhCrustpJ`
