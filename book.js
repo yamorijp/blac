@@ -8,10 +8,11 @@ const throttle = require('lodash.throttle');
 
 const term = require('./core/terminal');
 const api = require('./lightning/api');
+const pub = new api.PublicAPI();
 const model = require('./core/model');
 const products = require('./core/product');
 
-const render_wait = 200;
+const render_wait = 300;
 
 let product = null;
 let health = new model.Health();
@@ -68,24 +69,9 @@ const _render = () => {
 const render = throttle(_render, render_wait);
 
 
-const main = (program) => {
-  product = products.get_product(program.product);
-  book.lock()
-    .setRowCount(program.row)
-    .setGroupingFactor(program.group);
-
-  let check_health = function () {
-    new api.PublicAPI().call('GET', '/v1/getboardstate', {product_code: product.code})
-      .then(data => {
-        health.update(data);
-        render();
-      });
-  };
-  check_health();
-  setInterval(check_health, 60000);
-
-  let board_channel = 'lightning_board_' + product.code;
-  let ticker_channel = 'lightning_ticker_' + product.code;
+const subscribe = () => {
+  const board_channel = 'lightning_board_' + product.code;
+  const ticker_channel = 'lightning_ticker_' + product.code;
   new api.RealtimeAPI()
     .attach((channel, message) => {
       switch (channel) {
@@ -99,14 +85,35 @@ const main = (program) => {
       render();
     })
     .subscribe([board_channel, ticker_channel]);
+}
 
-  new api.PublicAPI()
-    .call('GET', '/v1/board', {product_code: product.code})
+const poll_all_price_levels = () => {
+  pub.call('GET', '/v1/board', {product_code: product.code})
     .then(data => {
+      book.lock();
       book.setData(data);
       book.unlock();
       render();
+      setTimeout(poll_all_price_levels, 20000);
     });
+}
+
+const main = (program) => {
+  product = products.get_product(program.product);
+  book.setRowCount(program.row).setGroupingFactor(program.group);
+
+  let check_health = () => {
+    pub.call('GET', '/v1/getboardstate', {product_code: product.code})
+      .then(data => {
+        health.update(data);
+        render();
+      });
+  };
+  check_health();
+  setInterval(check_health, 60000);
+
+  poll_all_price_levels()
+  subscribe()
 };
 
 process.on("uncaughtException", (err) => {
