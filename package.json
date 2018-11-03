@@ -1,14 +1,20 @@
 {
   "name": "blac",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "bitFlyer Lightning API Console",
-  "keywords": ["bitflyer", "lightning", "api", "console", "repl"],
+  "keywords": [
+    "bitflyer",
+    "lightning",
+    "api",
+    "console",
+    "repl"
+  ],
   "main": "console.js",
   "scripts": {
     "test": "mocha",
     "start": "./console.js",
     "console": "./console.js",
-    "board": "./board.js",
+    "book": "./book.js",
     "executions": "./executions.js"
   },
   "engines": {
@@ -21,7 +27,7 @@
     "commander": "^2.11.0",
     "jsonschema": "^1.2.0",
     "lodash.throttle": "^4.1.1",
-    "pubnub": "^4.0.8",
+    "socket.io-client": "^2.1.1",
     "sync-request": "^4.1.0",
     "then-request": "^4.1.0",
     "uuid": "^3.1.0"

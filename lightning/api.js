@@ -6,12 +6,12 @@
 
 const qs = require('qs');
 const crypto = require('crypto');
-const PubNub = require('pubnub');
 const request = require('then-request');
 const requestSync = require('sync-request');
 
 const ENDPOINT = "https://api.bitflyer.jp";
-const SUBSCRIBE_KEY = "sub-c-52a9ab50-291b-11e5-baaa-0619f8945a4f";
+const ENDPOINT_IO = 'https://io.lightstream.bitflyer.com'
+const io = require('socket.io-client');
 
 let debug = false;
 
@@ -151,22 +151,24 @@ class PrivateAPI extends PublicAPI {
  */
 class RealtimeAPI {
 
-  constructor(key = SUBSCRIBE_KEY) {
+  constructor(url = ENDPOINT_IO) {
+    this.url = url;
     this.channels = [];
     this.listeners = [];
-    this.client = new PubNub({subscribeKey: key});
-    this.client.addListener({message: this.onMessage.bind(this)});
+    this.client = io(url, {transports: ['websocket']});
   }
 
   subscribe(channels) {
     if (!Array.isArray(channels)) channels = [channels];
     this.channels = channels;
-    this.client.subscribe({channels: channels});
+    this.channels.forEach(ch => this.client.emit('subscribe', ch)
+      .on(ch, message => this.onMessage({channel: ch, message: message})));
     return this;
   }
 
   unsubscribe() {
-    this.client.unsubscribe(this.channels);
+    this.channels.forEach(channel => this.client.emit('unsubscribe', channel).off(channel));
+    this.channels = [];
     return this;
   }
 
