@@ -15,7 +15,11 @@ Lightning APIクライアントを統合したjavascriptの対話型コンソー
 ※U.S.リージョンには対応していません
 
 
-姉妹品としてQuoine Exchange APIを使用した [QUAC](https://github.com/yamorijp/quac)もあります。
+**姉妹品**
+
+* [quac](https://github.com/yamorijp/quac) - liquid / quoine 版
+* [blac](https://github.com/yamorijp/bbac) - bitbank 版
+
 
 
 ## 導入手順
@@ -121,5 +125,5 @@ APIの詳細は、bitFlyerによる[API Documentation](https://lightning.bitflye
 MIT
 
 
-bitcoin: `1BpLZm4JEFiDqAnaexuYMhGJZKdRQJKixP`  
-monacoin: `MEaJSzymtvpB7AtrryVzn9LeZYhCrustpJ`
+BTC: `1BpLZm4JEFiDqAnaexuYMhGJZKdRQJKixP`  
+ETH: `0x51349760d4a5287dbfa3961ca2e0006936bc9d88`
