@@ -15,7 +15,8 @@
     "start": "./console.js",
     "console": "./console.js",
     "book": "./book.js",
-    "executions": "./executions.js"
+    "executions": "./executions.js",
+    "ticker": "./ticker.js"
   },
   "engines": {
     "node": ">= 6.10.0"

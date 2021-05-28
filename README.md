@@ -18,7 +18,7 @@ Lightning APIクライアントを統合したjavascriptの対話型コンソー
 **姉妹品**
 
 * [quac](https://github.com/yamorijp/quac) - liquid / quoine 版
-* [blac](https://github.com/yamorijp/bbac) - bitbank 版
+* [bbac](https://github.com/yamorijp/bbac) - bitbank 版
 
 
 
@@ -125,5 +125,9 @@ APIの詳細は、bitFlyerによる[API Documentation](https://lightning.bitflye
 MIT
 
 
+## チップ
+
 BTC: `1BpLZm4JEFiDqAnaexuYMhGJZKdRQJKixP`  
 ETH: `0x51349760d4a5287dbfa3961ca2e0006936bc9d88`
+
+BAT ([Brave Rewards](https://brave.com/ja/brave-rewards/))でのチップも熱烈歓迎中！
