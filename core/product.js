@@ -5,6 +5,10 @@ const api = require('../lightning/api');
 const PAIRS = {
   // price_fmt, volume_fmt
   'BTC_JPY': [0, 8],
+  'XRP_JPY': [3, 8],
+  'ETH_JPY': [0, 8],
+  'XLM_JPY': [3, 8],
+  'MONA_JPY': [3, 8],
   'FX_BTC_JPY': [0, 8],
   'ETH_BTC': [5, 8],
   'BCH_BTC': [5, 8]
