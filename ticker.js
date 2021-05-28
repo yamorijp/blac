@@ -21,6 +21,8 @@ let tickers = null;
 const _render = () => {
   let out = process.stdout;
 
+  out.cork();
+
   out.write(term.clear);
   out.write(term.nl);
 
@@ -57,6 +59,8 @@ const _render = () => {
 
   out.write(term.separator + term.nl);
   out.write(term.nl);
+
+  process.nextTick(() => out.uncork());
 };
 const render = throttle(_render, render_wait);
 

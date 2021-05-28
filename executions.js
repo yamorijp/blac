@@ -20,6 +20,8 @@ let buffer = new model.ExecutionBuffer();
 const _render = () => {
   let out = process.stdout;
 
+  out.cork();
+
   out.write(term.clear);
   out.write(term.nl);
 
@@ -58,6 +60,8 @@ const _render = () => {
 
   out.write(term.separator + term.nl);
   out.write(term.nl);
+
+  process.nextTick(() => out.uncork());
 };
 let render = throttle(_render, render_wait);
 

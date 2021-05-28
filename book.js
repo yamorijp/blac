@@ -23,6 +23,8 @@ let book = new model.OrderBook();
 const _render = () => {
   let out = process.stdout;
 
+  out.cork();
+
   out.write(term.clear);
   out.write(term.nl);
 
@@ -65,6 +67,8 @@ const _render = () => {
 
   out.write(`  Service) ${health.health}    Market) ${health.state}`);
   out.write(term.nl);
+
+  process.nextTick(() => out.uncork());
 };
 const render = throttle(_render, render_wait);
 
